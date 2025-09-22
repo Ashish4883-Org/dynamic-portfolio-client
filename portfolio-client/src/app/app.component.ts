@@ -21,6 +21,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.tryBackendWakeUp();
+
+    // Test fetching portfolio data on init
+    this.api.getPortfolio().subscribe((data) => {
+      console.log('Portfolio data:', data);
+    });
   }
 
   tryBackendWakeUp() {

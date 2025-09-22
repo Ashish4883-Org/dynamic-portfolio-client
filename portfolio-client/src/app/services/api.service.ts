@@ -16,6 +16,10 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}`);
   }
 
+  getPortfolio(): Observable<any> {
+    return this.http.get(`${this.baseUrl}portfolio`);
+  }
+
   post(url: any, data: any, options?: any) {
     return this.http.post(environment.base + url, data, options);
   }
