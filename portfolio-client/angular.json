@@ -28,7 +28,9 @@
                 "glob": "**/*",
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
                 "output": "/assets/"
-              }
+              },
+              "src/favicon.ico", // Add this if you have a favicon
+              "src/_redirects" // Add this line
             ],
             "styles": ["src/styles.scss"],
             "scripts": []
