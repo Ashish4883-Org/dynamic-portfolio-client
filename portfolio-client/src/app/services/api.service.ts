@@ -13,7 +13,7 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getHello(): Observable<any> {
-    return this.http.get(`${this.baseUrl}hello`);
+    return this.http.get(`${this.baseUrl}`);
   }
 
   post(url: any, data: any, options?: any) {

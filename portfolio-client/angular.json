@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "dynamic-portfolio-client": {
+    "portfolio-client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/dynamic-portfolio-client",
+            "outputPath": "dist/portfolio-client",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -61,10 +61,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "dynamic-portfolio-client:build:production"
+              "buildTarget": "portfolio-client:build:production"
             },
             "development": {
-              "buildTarget": "dynamic-portfolio-client:build:development"
+              "buildTarget": "portfolio-client:build:development"
             }
           },
           "defaultConfiguration": "development"

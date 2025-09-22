@@ -13,7 +13,6 @@ import { filter } from 'rxjs';
 export class HeaderComponent {
   isRegisterSelected: boolean = false;
   isLoginSelected: boolean = false;
-  message = input('');
 
   constructor(router: Router) {
     router.events

@@ -14,8 +14,7 @@ import { catchError, delay, of, retryWhen, tap } from 'rxjs';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  title = 'dynamic-portfolio-client';
-  message = '';
+  title = 'portfolio-client';
   isLoading: boolean = true;
 
   constructor(private api: ApiService) {}
@@ -42,7 +41,7 @@ export class AppComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           this.isLoading = false;
-          this.message = res.message;
+          console.log('Backend is awake:', res);
         }
       });
   }
