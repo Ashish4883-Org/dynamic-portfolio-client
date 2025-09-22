@@ -1,12 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ApiService } from './services/api.service';
+import { HeaderComponent } from './components/header/header.component';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { catchError, delay, of, retryWhen, tap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterOutlet, HeaderComponent, NzAlertModule, NzSpinModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'dynamic-portfolio-client';
+  message = '';
+  isLoading: boolean = true;
+
+  constructor(private api: ApiService) {}
+
+  ngOnInit() {
+    this.tryBackendWakeUp();
+  }
+
+  tryBackendWakeUp() {
+    this.api
+      .getHello()
+      .pipe(
+        retryWhen((errors) =>
+          errors.pipe(
+            tap(() => console.log('Backend not ready yet, retrying...')),
+            delay(2000) // wait 2s before retry
+          )
+        ),
+        catchError((err) => {
+          console.error('Backend still not reachable', err);
+          return of(null);
+        })
+      )
+      .subscribe((res) => {
+        if (res) {
+          this.isLoading = false;
+          this.message = res.message;
+        }
+      });
+  }
 }
