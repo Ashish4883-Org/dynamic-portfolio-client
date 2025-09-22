@@ -1,0 +1,113 @@
+<h1>Registration</h1>
+<div class="center-box">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <!-- Full Name -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="fullName"
+        >Full Name</nz-form-label
+      >
+      <nz-form-control
+        [nzSm]="14"
+        [nzXs]="24"
+        nzErrorTip="The input is not valid Name!"
+      >
+        <input nz-input formControlName="fullName" id="fullName" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Email -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
+        >E-mail</nz-form-label
+      >
+      <nz-form-control
+        [nzSm]="14"
+        [nzXs]="24"
+        nzErrorTip="The input is not valid E-mail!"
+      >
+        <input nz-input formControlName="email" id="email" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Password -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="password"
+        >Password</nz-form-label
+      >
+      <nz-form-control
+        [nzSm]="14"
+        [nzXs]="24"
+        nzErrorTip="Please input your password!"
+      >
+        <input
+          nz-input
+          type="password"
+          formControlName="password"
+          id="password"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Confirm Password -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="checkPassword"
+        >Confirm Password</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input
+          nz-input
+          type="password"
+          formControlName="checkPassword"
+          id="checkPassword"
+        />
+        <ng-container
+          *ngIf="
+            validateForm.controls.checkPassword.dirty ||
+            validateForm.controls.checkPassword.touched
+          "
+        >
+          <div
+            class="ant-form-item-explain"
+            *ngIf="validateForm.hasError('passwordMismatch')"
+          >
+            Two passwords that you enter are inconsistent!
+          </div>
+          <div
+            class="ant-form-item-explain"
+            *ngIf="validateForm.controls.checkPassword.hasError('required')"
+          >
+            Please confirm your password!
+          </div>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Phone Number -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="phoneNumber"
+        >Phone Number</nz-form-label
+      >
+      <nz-form-control
+        [nzSm]="14"
+        [nzXs]="24"
+        nzErrorTip="Please input your phone number!"
+      >
+        <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+          <ng-template #addOnBeforeTemplate>
+            <nz-select formControlName="phoneNumberPrefix" class="phone-select">
+              <nz-option nzLabel="+91" nzValue="+91"></nz-option>
+            </nz-select>
+          </ng-template>
+          <input formControlName="phoneNumber" id="phoneNumber" nz-input />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Register Button -->
+    <nz-form-item nz-row class="register-area">
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <button nz-button nzType="primary" type="submit">Register</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
