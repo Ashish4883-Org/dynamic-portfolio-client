@@ -19,5 +19,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40vh;
+  flex-direction: column;
+}
+
+@media (max-width: 600px) {
+  .login-form {
+    min-width: unset;
+    max-width: 98vw;
+    width: 98vw;
+    padding: 0 12px;
+  }
+  .center-box {
+    padding: 0 8px;
+  }
+  .login-form-button {
+    width: 100%;
+    font-size: 1rem;
+  }
+  .login-form-margin {
+    margin-bottom: 12px;
+  }
 }

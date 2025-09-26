@@ -1,5 +1,5 @@
-<h1>Registration</h1>
 <div class="center-box">
+  <h1>Registration</h1>
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <!-- Full Name -->
     <nz-form-item>
@@ -105,8 +105,10 @@
 
     <!-- Register Button -->
     <nz-form-item nz-row class="register-area">
-      <nz-form-control [nzSpan]="14" [nzOffset]="6">
-        <button nz-button nzType="primary" type="submit">Register</button>
+      <nz-form-control [nzSpan]="14" class="button-container">
+        <button nz-button style="width: 100%" nzType="primary" type="submit">
+          Register
+        </button>
       </nz-form-control>
     </nz-form-item>
   </form>

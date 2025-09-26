@@ -1,0 +1,18 @@
+nz-splitter {
+  height: 80vh;
+  width: 80vw;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 600px) {
+  nz-splitter {
+    height: 60vh;
+    width: 98vw;
+    min-width: unset;
+    box-shadow: none;
+  }
+  .box {
+    font-size: 1rem;
+    padding: 8px;
+  }
+}

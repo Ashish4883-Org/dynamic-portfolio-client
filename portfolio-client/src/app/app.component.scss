@@ -1,8 +1,12 @@
 .center-container {
+  min-height: calc(
+    100vh - 64px
+  ); /* 64px is assumed header height, adjust if needed */
+  width: 100%;
+  margin: 0 0 0 0;
   display: flex;
-  justify-content: center; /* horizontally */
-  align-items: center; /* vertically */
-  height: 90vh; /* full viewport height */
+  justify-content: center;
+  align-items: center;
 }
 
 .loading-container {
@@ -15,4 +19,18 @@
   justify-content: center; /* horizontal center */
   align-items: center; /* vertical center */
   z-index: 9999; /* stay above everything */
+}
+
+@media (max-width: 600px) {
+  .center-container {
+    height: auto;
+    width: 100vw;
+    padding: 16px 8px 0 8px; /* Add top padding for gap below header */
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .loading-container {
+    padding: 0 8px;
+    font-size: 1rem;
+  }
 }

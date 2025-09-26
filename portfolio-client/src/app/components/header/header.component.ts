@@ -1,12 +1,12 @@
-import { Component, Input, input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-header',
-  imports: [NzLayoutModule, NzMenuModule, RouterModule],
+  imports: [NzLayoutModule, RouterModule, NzDropDownModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

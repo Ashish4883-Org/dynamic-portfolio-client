@@ -15,5 +15,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  flex-direction: column;
+}
+
+@media (max-width: 600px) {
+  [nz-form] {
+    min-width: unset;
+    max-width: 100vw;
+    width: 100vw;
+    padding: 0 12px;
+  }
+  .center-box {
+    padding: 0 8px;
+  }
+  .register-area {
+    margin-bottom: 6px;
+  }
+  .ant-select.ant-select-in-form-item.phone-select {
+    width: 60px;
+  }
+}
+
+@media (min-width: 575px) {
+  .button-container {
+    left: 23px;
+    margin: 0 auto; /* centers the container */
+  }
+}
+
+@media (max-width: 600px) {
+  .button-container {
+    width: 100%; /* full width on mobile */
+  }
 }

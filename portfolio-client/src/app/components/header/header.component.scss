@@ -2,14 +2,42 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0;
+  padding: 0 12px;
+  background: #141414; /* optional */
 }
 
 .logo {
   font-size: 20px;
   font-weight: bold;
+  color: #2196f3;
 }
 
-.menu-right {
-  margin-left: auto; /* push to right */
+.menu-mobile {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+// .menu-mobile button {
+//   font-size: 30px;
+//   line-height: 1;
+//   background-color: transparent;
+// }
+
+.menu-mobile button {
+  font-size: 30px;
+  line-height: 1;
+  background-color: transparent;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); /* subtle shadow */
+  border-radius: 6px; /* optional rounded corners */
+  padding: 4px 8px;
+  color: #fff; /* make sure icon/text is visible */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.menu-mobile button:hover {
+  box-shadow: 0 4px 10px rgba(33, 150, 243, 0.6); /* glow on hover */
+  background-color: rgba(33, 150, 243, 0.1); /* light background */
 }

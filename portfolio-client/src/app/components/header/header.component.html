@@ -1,21 +1,19 @@
 <nz-layout>
   <nz-header class="app-header">
     <div class="logo">
-      <!-- want to add logo here  -->
       <a routerLink="/portfolio">Portfolio</a>
     </div>
 
-    <ul nz-menu nzMode="horizontal" class="menu-right">
-      <li nz-menu-item routerLink="/login" [nzMatchRouter]="isLoginSelected">
-        <a>Login</a>
-      </li>
-      <li
-        nz-menu-item
-        routerLink="/register"
-        [nzMatchRouter]="isRegisterSelected"
-      >
-        <a>Register</a>
-      </li>
-    </ul>
+    <div class="menu-mobile">
+      <button nz-button nzType="text" nz-dropdown [nzDropdownMenu]="menu">
+        ☰
+      </button>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item routerLink="/login">Login</li>
+          <li nz-menu-item routerLink="/register">Register</li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
   </nz-header>
 </nz-layout>
