@@ -21,18 +21,30 @@ export class ApiService {
   }
 
   post(url: any, data: any, options?: any) {
-    return this.http.post(environment.base + url, data, options);
+    return this.http.post(environment.base + url, data, {
+      ...options,
+      withCredentials: true,
+    });
   }
 
   put(url: any, data: any, options?: any) {
-    return this.http.put(environment.base + url, data, options);
+    return this.http.put(environment.base + url, data, {
+      ...options,
+      withCredentials: true,
+    });
   }
 
   delete(url: any, options?: any) {
-    return this.http.delete(environment.base + url, options);
+    return this.http.delete(environment.base + url, {
+      ...options,
+      withCredentials: true,
+    });
   }
 
   get(url: any, options?: any) {
-    return this.http.get(environment.base + url, options);
+    return this.http.get(environment.base + url, {
+      ...options,
+      withCredentials: true,
+    });
   }
 }

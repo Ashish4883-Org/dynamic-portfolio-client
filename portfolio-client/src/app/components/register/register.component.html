@@ -3,9 +3,9 @@
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <!-- Full Name -->
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="fullName"
-        >Full Name</nz-form-label
-      >
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="fullName">
+        Full Name
+      </nz-form-label>
       <nz-form-control
         [nzSm]="14"
         [nzXs]="24"
@@ -17,9 +17,9 @@
 
     <!-- Email -->
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
-        >E-mail</nz-form-label
-      >
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">
+        E-mail
+      </nz-form-label>
       <nz-form-control
         [nzSm]="14"
         [nzXs]="24"
@@ -31,9 +31,9 @@
 
     <!-- Password -->
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="password"
-        >Password</nz-form-label
-      >
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="password">
+        Password
+      </nz-form-label>
       <nz-form-control
         [nzSm]="14"
         [nzXs]="24"
@@ -50,9 +50,9 @@
 
     <!-- Confirm Password -->
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="checkPassword"
-        >Confirm Password</nz-form-label
-      >
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="checkPassword">
+        Confirm Password
+      </nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <input
           nz-input
@@ -60,33 +60,24 @@
           formControlName="checkPassword"
           id="checkPassword"
         />
-        <ng-container
-          *ngIf="
-            validateForm.controls.checkPassword.dirty ||
-            validateForm.controls.checkPassword.touched
-          "
-        >
-          <div
-            class="ant-form-item-explain"
-            *ngIf="validateForm.hasError('passwordMismatch')"
-          >
-            Two passwords that you enter are inconsistent!
-          </div>
-          <div
-            class="ant-form-item-explain"
-            *ngIf="validateForm.controls.checkPassword.hasError('required')"
-          >
-            Please confirm your password!
-          </div>
-        </ng-container>
+
+        @if (validateForm.controls.checkPassword.dirty ||
+        validateForm.controls.checkPassword.touched) { @if
+        (validateForm.hasError('passwordMismatch')) {
+        <div class="ant-form-item-explain">
+          Two passwords that you enter are inconsistent!
+        </div>
+        } @else if (validateForm.controls.checkPassword.hasError('required')) {
+        <div class="ant-form-item-explain">Please confirm your password!</div>
+        } }
       </nz-form-control>
     </nz-form-item>
 
     <!-- Phone Number -->
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="phoneNumber"
-        >Phone Number</nz-form-label
-      >
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="phoneNumber">
+        Phone Number
+      </nz-form-label>
       <nz-form-control
         [nzSm]="14"
         [nzXs]="24"

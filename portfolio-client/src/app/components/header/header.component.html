@@ -1,10 +1,21 @@
 <nz-layout>
   <nz-header class="app-header">
     <div class="logo">
-      <a routerLink="/portfolio">Portfolio</a>
+      <!-- <a routerLink="/portfolio">Portfolio</a> -->
+      <span>Portfolio</span>
     </div>
 
     <div class="menu-mobile">
+      @if (user$ | async; as user) {
+      <button
+        style="font-size: 25px"
+        nz-button
+        nzType="text"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+      } @else {
       <button nz-button nzType="text" nz-dropdown [nzDropdownMenu]="menu">
         ☰
       </button>
@@ -14,6 +25,7 @@
           <li nz-menu-item routerLink="/register">Register</li>
         </ul>
       </nz-dropdown-menu>
+      }
     </div>
   </nz-header>
 </nz-layout>

@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { ApiService } from './services/api.service';
 import { HeaderComponent } from './components/header/header.component';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { catchError, delay, of, retryWhen, tap } from 'rxjs';
+import { AuthService } from './services/auth.service';
+import { Store } from '@ngrx/store';
+import { setUser } from './store/user/user.actions';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -16,16 +20,19 @@ import { catchError, delay, of, retryWhen, tap } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'portfolio-client';
   isLoading: boolean = true;
-
-  constructor(private api: ApiService) {}
+  private api = inject(ApiService);
+  private authApi = inject(AuthService);
+  private store = inject(Store);
+  private router = inject(Router);
+  private http = inject(HttpClient);
 
   ngOnInit() {
     this.tryBackendWakeUp();
 
     // Test fetching portfolio data on init
-    this.api.getPortfolio().subscribe((data) => {
-      console.log('Portfolio data:', data);
-    });
+    // this.api.getPortfolio().subscribe((data) => {
+    //   console.log('Portfolio data:', data);
+    // });
   }
 
   tryBackendWakeUp() {
@@ -47,6 +54,21 @@ export class AppComponent implements OnInit {
         if (res) {
           this.isLoading = false;
           console.log('Backend is awake:', res);
+
+          this.http
+            .get('redisCheck', { responseType: 'text' })
+            .subscribe((res) => console.log(res));
+
+          this.authApi.me().subscribe(
+            (res: any) => {
+              console.log('User is logged in:', res);
+              this.store.dispatch(setUser({ user: res.user }));
+              this.router.navigate(['/portfolio']);
+            },
+            (err) => {
+              console.log('No active session', err);
+            }
+          );
         }
       });
   }

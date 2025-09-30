@@ -1,8 +1,67 @@
+<!-- @if (user$ | async; as user) {
+<h1>Welcome, {{ user?.name || user?.email || "User" }}!</h1>
+@if(user?.isPortfolioActive == false) {
+<button nz-button [nzType]="'primary'" (click)="createPortfolioForm()">
+  Create a Portfolio
+</button>
+} } @else {
+<h1>Welcome to Portfolio !</h1>
+} -->
+
+<!-- <ng-container *ngIf="user$ | async as user; else noUser">
+  <h1>Welcome, {{ user.name || user.email || "User" }}</h1>
+
+  <button
+    *ngIf="user.isPortfolioActive === false"
+    nz-button
+    [nzType]="'primary'"
+    (click)="createPortfolioForm()"
+  >
+    Create a Portfolio
+  </button>
+</ng-container>
+
+<ng-template #noUser>
+  <h1>Welcome to Portfolio!</h1>
+</ng-template> -->
+
+
+<!-- ✅ Debug: confirm the template renders -->
+<p style="color: green">✅ Template loaded</p>
+
+<!-- ✅ Main conditional block -->
+<ng-container *ngIf="user$ | async as user; else noUser">
+  <h1>Welcome, {{ user.name || user.email || 'User' }}</h1>
+
+  <!-- ✅ Sub-condition: if portfolio is not active -->
+  <button
+    *ngIf="user.isPortfolioActive === false"
+    nz-button
+    [nzType]="'primary'"
+    (click)="createPortfolioForm()"
+  >
+    Create a Portfolio
+  </button>
+</ng-container>
+
+<!-- ✅ Fallback: user is null -->
+<ng-template #noUser>
+  <h1>Welcome to Portfolio!</h1>
+</ng-template>
+
+<!-- ✅ Debug: show user value -->
+<pre>{{ user$ | async | json }}</pre>
+
+
+<!-- <pre>{{ user$ | async | json }}</pre> -->
+
+<!-- @if(openPortfolioForm){
 <nz-splitter>
-  <nz-splitter-panel nzDefaultSize="40%" nzMin="20%" nzMax="70%">
+  <nz-splitter-panel nzDefaultSize="30%" nzMin="20%" nzMax="60%">
     <div class="box">First</div>
   </nz-splitter-panel>
   <nz-splitter-panel>
     <div class="box">Second</div>
   </nz-splitter-panel>
 </nz-splitter>
+} -->
