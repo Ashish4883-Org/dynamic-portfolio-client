@@ -40,7 +40,12 @@ export class UserEffects {
     () =>
       this.actions$.pipe(
         ofType(loginSuccess),
-        tap(() => this.router.navigate(['/portfolio']))
+        tap(({ user }) => {
+          if (user?.mstrid) {
+            this.socketService.connect(user.mstrid);
+          }
+          this.router.navigate(['/portfolio']);
+        })
       ),
     { dispatch: false }
   );

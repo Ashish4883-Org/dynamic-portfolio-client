@@ -1,48 +1,103 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../environments/environment';
+import { BehaviorSubject, interval, Subscription } from 'rxjs';
+
+export interface UserStatus {
+  mstrid: string;
+  status: 'online' | 'offline';
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class SocketService {
-  private socket: Socket | undefined;
+  // private socket: Socket | undefined;
   private readonly SERVER_URL = environment.base;
+
+  private socket!: Socket;
+  private heartbeatSub?: Subscription;
+
+  // Observable for user status updates
+  public userStatus$ = new BehaviorSubject<UserStatus | null>(null);
 
   constructor() {}
 
-  connect() {
-    this.socket = io(this.SERVER_URL, {
-      withCredentials: false, // Already handled by CORS '*'
-    });
+  //**********Testing socket */
+  // connect() {
+  //   this.socket = io(this.SERVER_URL, {
+  //     withCredentials: false, // Already handled by CORS '*'
+  //   });
+
+  //   this.socket.on('connect', () => {
+  //     console.log(`🟢 Connected to server: ${this.socket?.id}`);
+  //     // 🔥 Test ping immediately after connect
+  //     this.sendPing();
+
+  //     // Or keep pinging every 5s
+  //     setInterval(() => this.sendPing(), 5000);
+  //   });
+
+  //   this.socket.on('disconnect', (reason) => {
+  //     console.log(`🔴 Disconnected from server: ${reason}`);
+  //   });
+
+  //   // Optional: test ping/pong
+  //   this.socket.on('pong', () => {
+  //     console.log('✅ Received pong from server');
+  //   });
+  // }
+
+  // disconnect() {
+  //   if (this.socket?.connected) {
+  //     this.socket.disconnect();
+  //   }
+  // }
+
+  // // Optional method to test ping
+  // sendPing() {
+  //   this.socket?.emit('ping');
+  // }
+  //**********Testing socket end */
+
+  /** Connect socket and start heartbeat */
+  connect(mstrid: string) {
+    this.socket = io(environment.base, { withCredentials: false });
 
     this.socket.on('connect', () => {
-      console.log(`🟢 Connected to server: ${this.socket?.id}`);
-      // 🔥 Test ping immediately after connect
-      this.sendPing();
+      console.log(`🟢 Connected: ${this.socket.id}`);
 
-      // Or keep pinging every 5s
-      setInterval(() => this.sendPing(), 5000);
+      // Notify backend that user is online
+      this.socket.emit('user:online', { mstrid });
+
+      // Heartbeat to refresh Redis TTL every 10s
+      this.heartbeatSub = interval(10000).subscribe(() => {
+        this.socket.emit('user:ping', { mstrid });
+      });
+    });
+
+    // Listen for user status updates
+    this.socket.on('user:status', (status: UserStatus) => {
+      this.userStatus$.next(status);
     });
 
     this.socket.on('disconnect', (reason) => {
-      console.log(`🔴 Disconnected from server: ${reason}`);
-    });
-
-    // Optional: test ping/pong
-    this.socket.on('pong', () => {
-      console.log('✅ Received pong from server');
+      console.log(`🔴 Disconnected: ${reason}`);
+      this.stopHeartbeat();
     });
   }
 
+  /** Disconnect socket and stop heartbeat */
   disconnect() {
-    if (this.socket?.connected) {
-      this.socket.disconnect();
-    }
+    this.stopHeartbeat();
+    this.socket?.disconnect();
   }
 
-  // Optional method to test ping
-  sendPing() {
-    this.socket?.emit('ping');
+  /** Stop heartbeat interval */
+  private stopHeartbeat() {
+    if (this.heartbeatSub) {
+      this.heartbeatSub.unsubscribe();
+      this.heartbeatSub = undefined;
+    }
   }
 }

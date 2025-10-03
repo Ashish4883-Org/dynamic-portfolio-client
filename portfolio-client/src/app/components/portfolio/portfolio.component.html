@@ -65,3 +65,13 @@
   </nz-splitter-panel>
 </nz-splitter>
 } -->
+
+<h2>Users Online Status</h2>
+<ul>
+  <li *ngFor="let user of users">
+    {{ user.name }} ({{ user.role }}) - 
+    <span [style.color]="user.online ? 'green' : 'red'">
+      {{ user.online ? 'Online' : 'Offline' }}
+    </span>
+  </li>
+</ul>

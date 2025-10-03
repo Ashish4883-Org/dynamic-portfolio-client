@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
             (res: any) => {
               console.log('User is logged in:', res);
               this.store.dispatch(setUser({ user: res.user }));
-              this.socketService.connect();
+              this.socketService.connect(res.user.mstrid);
               this.router.navigate(['/portfolio']);
             },
             (err) => {
