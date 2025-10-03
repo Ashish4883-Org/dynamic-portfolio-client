@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
           console.log('Backend is awake:', res);
 
           this.http
-            .get(`${environment.base}/redisCheck`, { responseType: 'text' })
+            .get(`${environment.base}redisCheck`, { responseType: 'text' })
             .subscribe((res) => console.log(res));
 
           this.authApi.me().subscribe(
