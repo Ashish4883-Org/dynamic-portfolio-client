@@ -14,6 +14,7 @@ import {
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { SocketService } from '../../services/socket.sevice';
 
 @Injectable()
 export class UserEffects {
@@ -21,6 +22,7 @@ export class UserEffects {
   private api = inject(ApiService);
   private router = inject(Router);
   private store = inject(Store);
+  private socketService = inject(SocketService);
 
   login$ = createEffect(() =>
     this.actions$.pipe(
@@ -49,6 +51,7 @@ export class UserEffects {
       mergeMap(() =>
         this.api.post('logout', {}).pipe(
           map((res: any) => {
+            this.socketService.disconnect();
             if (res.message === 'Logged out successfully') {
               return logoutSuccess();
             } else {

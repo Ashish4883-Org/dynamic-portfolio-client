@@ -9,6 +9,7 @@ import { AuthService } from './services/auth.service';
 import { Store } from '@ngrx/store';
 import { setUser } from './store/user/user.actions';
 import { HttpClient } from '@angular/common/http';
+import { SocketService } from './services/socket.sevice';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
   private store = inject(Store);
   private router = inject(Router);
   private http = inject(HttpClient);
+  private socketService = inject(SocketService);
 
   ngOnInit() {
     this.tryBackendWakeUp();
@@ -63,6 +65,7 @@ export class AppComponent implements OnInit {
             (res: any) => {
               console.log('User is logged in:', res);
               this.store.dispatch(setUser({ user: res.user }));
+              this.socketService.connect();
               this.router.navigate(['/portfolio']);
             },
             (err) => {
