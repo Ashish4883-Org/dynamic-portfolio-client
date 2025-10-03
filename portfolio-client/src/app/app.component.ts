@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { setUser } from './store/user/user.actions';
 import { HttpClient } from '@angular/common/http';
 import { SocketService } from './services/socket.sevice';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.tryBackendWakeUp();
-
+    
     // Test fetching portfolio data on init
     // this.api.getPortfolio().subscribe((data) => {
     //   console.log('Portfolio data:', data);
@@ -58,7 +59,7 @@ export class AppComponent implements OnInit {
           console.log('Backend is awake:', res);
 
           this.http
-            .get('redisCheck', { responseType: 'text' })
+            .get(`${environment.base}/redisCheck`, { responseType: 'text' })
             .subscribe((res) => console.log(res));
 
           this.authApi.me().subscribe(
