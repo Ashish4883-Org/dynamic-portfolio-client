@@ -19,7 +19,7 @@ export class SocketService {
   private heartbeatSub?: Subscription;
 
   // Observable for user status updates
-  public userStatus$ = new BehaviorSubject<UserStatus | null>(null);
+  public onlineUsers$ = new BehaviorSubject<string[]>([]); // Array of online mstrids
 
   constructor() {}
 
@@ -77,8 +77,8 @@ export class SocketService {
     });
 
     // Listen for user status updates
-    this.socket.on('user:status', (status: UserStatus) => {
-      this.userStatus$.next(status);
+     this.socket.on('user:online-list', (onlineUsers: string[]) => {
+      this.onlineUsers$.next(onlineUsers);
     });
 
     this.socket.on('disconnect', (reason) => {
