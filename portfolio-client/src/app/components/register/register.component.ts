@@ -15,6 +15,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { registerUser } from '../../store/user/user.actions';
+import { RegisterUser, User } from '../../models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -33,6 +36,7 @@ import { CommonModule } from '@angular/common';
 export class RegisterComponent implements OnInit, OnDestroy {
   private fb = inject(NonNullableFormBuilder);
   private destroy$ = new Subject<void>();
+  private store = inject(Store);
 
   validateForm = this.fb.group(
     {
@@ -70,7 +74,23 @@ export class RegisterComponent implements OnInit, OnDestroy {
       });
       return;
     }
-    console.log('submit', this.validateForm.value);
+    // Generate mstrid: name + random number (1-100)
+    const randomNum = Math.floor(Math.random() * 100) + 1;
+    const mstrid = `${this.validateForm.value.fullName}${randomNum}`;
+
+    // Create RegisterUser object
+    const user: RegisterUser = {
+      name: this.validateForm.value.fullName!,
+      email: this.validateForm.value.email!,
+      password: this.validateForm.value.password!,
+      number: this.validateForm.value.phoneNumber!,
+      prefix: this.validateForm.value.phoneNumberPrefix!,
+      role: this.validateForm.value.role!,
+      mstrid,
+      isPortfolioActive: false,
+    };
+    console.log('Registering User', user);
+    this.store.dispatch(registerUser({ user }));
   }
 
   passwordMatchValidator(group: AbstractControl): ValidationErrors | null {

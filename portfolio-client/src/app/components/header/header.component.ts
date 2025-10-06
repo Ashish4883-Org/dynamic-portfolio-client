@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectUser } from '../../store/user/user.selectors';
+import { selectCurrentUser } from '../../store/user/user.selectors';
 import { clearUser, logout } from '../../store/user/user.actions';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -26,7 +26,7 @@ export class HeaderComponent {
   user$: Observable<any>;
 
   constructor(private store: Store, router: Router) {
-    this.user$ = this.store.select(selectUser);
+    this.user$ = this.store.select(selectCurrentUser);
     router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {

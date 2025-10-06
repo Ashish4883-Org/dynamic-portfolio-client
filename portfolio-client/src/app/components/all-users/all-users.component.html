@@ -1,0 +1,37 @@
+<h3>👥 All Users</h3>
+<nz-table
+  #userTable
+  [nzBordered]="true"
+  [nzSize]="'middle'"
+  [nzBordered]="true"
+  [nzShowPagination]="false"
+  [nzBordered]="true"
+  [nzBordered]="true"
+  [nzData]="users"
+  [nzBordered]="true"
+  class="user-grid"
+>
+  <thead>
+    <tr>
+      <th>Master ID</th>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let user of userTable.data">
+      <td>{{ user.mstrid }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.role }}</td>
+      <td>
+        <span
+          class="status-dot"
+          [ngClass]="user.online ? 'online' : 'offline'"
+        ></span>
+        {{ user.online ? "Online" : "Offline" }}
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

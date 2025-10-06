@@ -1,0 +1,12 @@
+<h3>👤 Profile</h3>
+<!-- <pre>{{ user$ | async | json }}</pre> -->
+<div class="user-card" *ngIf="user$ | async as user">
+  <p><strong>Name:</strong> {{ user.name }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <p><strong>Number:</strong> {{ user.prefix }}-{{ user.number }}</p>
+  <p><strong>Role:</strong> {{ user.role }}</p>
+  <p>
+    <strong>Portfolio Active:</strong>
+    {{ user.isPortfolioActive ? "Yes" : "No" }}
+  </p>
+</div>

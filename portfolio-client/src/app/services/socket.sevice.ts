@@ -3,11 +3,6 @@ import { io, Socket } from 'socket.io-client';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, interval, Subscription } from 'rxjs';
 
-export interface UserStatus {
-  mstrid: string;
-  status: 'online' | 'offline';
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -19,7 +14,7 @@ export class SocketService {
   private heartbeatSub?: Subscription;
 
   // Observable for user status updates
-  public onlineUsers$ = new BehaviorSubject<string[]>([]); // Array of online mstrids
+  public static onlineUsers$ = new BehaviorSubject<string[]>([]); // Array of online mstrids
 
   constructor() {}
 
@@ -77,8 +72,8 @@ export class SocketService {
     });
 
     // Listen for user status updates
-     this.socket.on('user:online-list', (onlineUsers: string[]) => {
-      this.onlineUsers$.next(onlineUsers);
+    this.socket.on('user:online-list', (onlineUsers: string[]) => {
+      SocketService.onlineUsers$.next(onlineUsers);
     });
 
     this.socket.on('disconnect', (reason) => {

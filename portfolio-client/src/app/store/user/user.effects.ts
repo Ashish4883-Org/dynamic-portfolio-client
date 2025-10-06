@@ -10,11 +10,18 @@ import {
   logoutSuccess,
   logoutFailure,
   clearUser,
+  loadUsers,
+  loadUsersSuccess,
+  loadUsersFailure,
+  registerUserFailure,
+  registerUserSuccess,
+  registerUser,
 } from './user.actions';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { SocketService } from '../../services/socket.sevice';
+import { User } from '../../models/user.model';
 
 @Injectable()
 export class UserEffects {
@@ -79,5 +86,37 @@ export class UserEffects {
         })
       ),
     { dispatch: false }
+  );
+
+  loadUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadUsers),
+      mergeMap(() =>
+        (this.api.get('users') as unknown as Observable<User[]>).pipe(
+          map((users) => loadUsersSuccess({ users })),
+          catchError((error) => of(loadUsersFailure({ error })))
+        )
+      )
+    )
+  );
+
+  registerUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(registerUser),
+      mergeMap((action) =>
+        this.api.post('users', action.user).pipe(
+          mergeMap((user: any) => [
+            // Dispatch register success
+            registerUserSuccess({ user: user.safeUser }),
+            // Dispatch login
+            login({
+              email: user.safeUser.email,
+              password: action.user.password,
+            }),
+          ]),
+          catchError((error) => of(registerUserFailure({ error })))
+        )
+      )
+    )
   );
 }

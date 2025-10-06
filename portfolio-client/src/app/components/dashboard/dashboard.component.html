@@ -1,0 +1,31 @@
+<h3>📊 Dashboard</h3>
+
+<!-- ✅ Main conditional block -->
+<ng-container *ngIf="user$ | async as user; else noUser">
+  <div class="dashboard-header">
+    <!-- Circle avatar with initials -->
+    <div class="avatar-circle">
+      {{ getInitials(user.name || user.email) }}
+    </div>
+
+    <!-- Welcome message -->
+    <div class="dashboard-welcome">
+      <h2>Welcome, {{ user.name || user.email || "User" }}</h2>
+
+      <!-- ✅ Sub-condition: if portfolio is not active -->
+      <button
+        *ngIf="user.isPortfolioActive === false"
+        nz-button
+        nzType="primary"
+        (click)="createPortfolioForm()"
+      >
+        Create a Portfolio
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+<!-- ✅ Fallback: user is null -->
+<ng-template #noUser>
+  <h1>Welcome to Portfolio!</h1>
+</ng-template>

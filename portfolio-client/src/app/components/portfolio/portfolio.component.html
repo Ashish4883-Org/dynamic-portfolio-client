@@ -1,77 +1,22 @@
-<!-- @if (user$ | async; as user) {
-<h1>Welcome, {{ user?.name || user?.email || "User" }}!</h1>
-@if(user?.isPortfolioActive == false) {
-<button nz-button [nzType]="'primary'" (click)="createPortfolioForm()">
-  Create a Portfolio
-</button>
-} } @else {
-<h1>Welcome to Portfolio !</h1>
-} -->
-
-<!-- <ng-container *ngIf="user$ | async as user; else noUser">
-  <h1>Welcome, {{ user.name || user.email || "User" }}</h1>
-
-  <button
-    *ngIf="user.isPortfolioActive === false"
-    nz-button
-    [nzType]="'primary'"
-    (click)="createPortfolioForm()"
-  >
-    Create a Portfolio
-  </button>
-</ng-container>
-
-<ng-template #noUser>
-  <h1>Welcome to Portfolio!</h1>
-</ng-template> -->
-
-
-<!-- ✅ Debug: confirm the template renders -->
-<p style="color: green">✅ Template loaded</p>
-
-<!-- ✅ Main conditional block -->
-<ng-container *ngIf="user$ | async as user; else noUser">
-  <h1>Welcome, {{ user.name || user.email || 'User' }}</h1>
-
-  <!-- ✅ Sub-condition: if portfolio is not active -->
-  <button
-    *ngIf="user.isPortfolioActive === false"
-    nz-button
-    [nzType]="'primary'"
-    (click)="createPortfolioForm()"
-  >
-    Create a Portfolio
-  </button>
-</ng-container>
-
-<!-- ✅ Fallback: user is null -->
-<ng-template #noUser>
-  <h1>Welcome to Portfolio!</h1>
-</ng-template>
-
-<!-- ✅ Debug: show user value -->
-<pre>{{ user$ | async | json }}</pre>
-
-
-<!-- <pre>{{ user$ | async | json }}</pre> -->
-
-<!-- @if(openPortfolioForm){
 <nz-splitter>
-  <nz-splitter-panel nzDefaultSize="30%" nzMin="20%" nzMax="60%">
-    <div class="box">First</div>
+  <!-- Sidebar Menu -->
+  <nz-splitter-panel nzDefaultSize="20%" nzMin="15%" nzMax="30%">
+    <ul class="menu">
+      <li (click)="loadContent('dashboard')">Dashboard</li>
+      <li (click)="loadContent('profile')">Profile</li>
+      <li (click)="loadContent('users')">All Users</li>
+    </ul>
   </nz-splitter-panel>
+
+  <!-- Content Area -->
   <nz-splitter-panel>
-    <div class="box">Second</div>
+    <div class="content">
+      <ng-container [ngSwitch]="selected">
+        <div *ngSwitchCase="'dashboard'"><app-dashboard></app-dashboard></div>
+        <div *ngSwitchCase="'profile'"><app-profile></app-profile></div>
+        <div *ngSwitchCase="'users'"><app-all-users></app-all-users></div>
+        <!-- <div *ngSwitchDefault>👉 Please select an option from the menu</div> -->
+      </ng-container>
+    </div>
   </nz-splitter-panel>
 </nz-splitter>
-} -->
-
-<h2>Users Online Status</h2>
-<ul>
-  <li *ngFor="let user of users">
-    {{ user.name }} ({{ user.role }}) - 
-    <span [style.color]="user.online ? 'green' : 'red'">
-      {{ user.online ? 'Online' : 'Offline' }}
-    </span>
-  </li>
-</ul>

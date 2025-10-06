@@ -1,0 +1,28 @@
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.avatar-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #1890ff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.dashboard-welcome h2 {
+  margin: 0 0 8px 0;
+}
+
+.dashboard-welcome button {
+  margin-top: 4px;
+}
