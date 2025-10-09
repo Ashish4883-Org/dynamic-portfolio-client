@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import { ChatMessage } from '../models/chatMessages.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class SocketService {
 
   // Observable for user status updates
   public static onlineUsers$ = new BehaviorSubject<string[]>([]); // Array of online mstrids
+  // public static chatMessages$ = new BehaviorSubject<ChatMessage[]>([]); // Array of chat messages
 
   constructor() {}
 
@@ -76,6 +78,13 @@ export class SocketService {
       SocketService.onlineUsers$.next(onlineUsers);
     });
 
+    // Listen for incoming chat messages
+    // this.socket.on('chat:message', (message: ChatMessage) => {
+    //   console.log('📩 New chat message received:', message);
+    //   const currentMessages = SocketService.chatMessages$.getValue();
+    //   SocketService.chatMessages$.next([...currentMessages, message]);
+    // });
+
     this.socket.on('disconnect', (reason) => {
       console.log(`🔴 Disconnected: ${reason}`);
       this.stopHeartbeat();
@@ -94,5 +103,27 @@ export class SocketService {
       this.heartbeatSub.unsubscribe();
       this.heartbeatSub = undefined;
     }
+  }
+
+  onMessageReceived(callback: (message: any) => void) {
+    if (!this.socket) return;
+
+    this.socket.on('chat:message', (message: any) => {
+      callback(message);
+    });
+  }
+
+  sendMessage(message: {
+    sender: string;
+    receiver: string;
+    message: string;
+    timestamp?: Date;
+  }) {
+    if (!this.socket || !this.socket.connected) {
+      console.warn('⚠️ Socket not connected. Message not sent.');
+      return;
+    }
+
+    this.socket.emit('chat:message', message);
   }
 }
