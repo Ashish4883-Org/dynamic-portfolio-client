@@ -64,6 +64,9 @@ export class SocketService {
     this.socket.on('connect', () => {
       console.log(`🟢 Connected: ${this.socket.id}`);
 
+      // ✅ Join your private room (REQUIRED for receiving messages)
+      this.socket.emit('chat:join', mstrid);
+
       // Notify backend that user is online
       this.socket.emit('user:online', { mstrid });
 
@@ -108,7 +111,7 @@ export class SocketService {
   onMessageReceived(callback: (message: any) => void) {
     if (!this.socket) return;
 
-    this.socket.on('chat:message', (message: any) => {
+    this.socket.on('chat:message:received', (message: any) => {
       callback(message);
     });
   }
