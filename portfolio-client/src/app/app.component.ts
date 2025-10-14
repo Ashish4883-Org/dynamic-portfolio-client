@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { ApiService } from './services/api.service';
 import { HeaderComponent } from './components/header/header.component';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
-import { catchError, delay, of, retryWhen, tap } from 'rxjs';
+import { catchError, delay, filter, of, retryWhen, tap } from 'rxjs';
 import { AuthService } from './services/auth.service';
 import { Store } from '@ngrx/store';
 import { setUser } from './store/user/user.actions';
@@ -22,6 +22,8 @@ import { environment } from '../environments/environment';
 export class AppComponent implements OnInit {
   title = 'portfolio-client';
   isLoading: boolean = true;
+  showHeader = true;
+
   private api = inject(ApiService);
   private authApi = inject(AuthService);
   private store = inject(Store);
@@ -31,11 +33,22 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.tryBackendWakeUp();
-    
+    this.handleRouteChanges();
+
     // Test fetching portfolio data on init
     // this.api.getPortfolio().subscribe((data) => {
     //   console.log('Portfolio data:', data);
     // });
+  }
+
+  handleRouteChanges() {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        const currentUrl = event.urlAfterRedirects;
+        // Hide header for shareable portfolio route
+        this.showHeader = !currentUrl.startsWith('/user/portfolio/');
+      });
   }
 
   tryBackendWakeUp() {
@@ -62,17 +75,21 @@ export class AppComponent implements OnInit {
             .get(`${environment.base}redisCheck`, { responseType: 'text' })
             .subscribe((res) => console.log(res));
 
-          this.authApi.me().subscribe(
-            (res: any) => {
-              console.log('User is logged in:', res);
-              this.store.dispatch(setUser({ user: res.user }));
-              this.socketService.connect(res.user.mstrid);
-              this.router.navigate(['/portfolio']);
-            },
-            (err) => {
-              console.log('No active session', err);
-            }
-          );
+          const currentUrl = this.router.url;
+          if (!currentUrl.startsWith('/user/portfolio/')) {
+            // Check if user is already logged in (session cookie)
+            this.authApi.me().subscribe(
+              (res: any) => {
+                console.log('User is logged in:', res);
+                this.store.dispatch(setUser({ user: res.user }));
+                this.socketService.connect(res.user.mstrid);
+                this.router.navigate(['/portfolio']);
+              },
+              (err) => {
+                console.log('No active session', err);
+              }
+            );
+          }
         }
       });
   }
