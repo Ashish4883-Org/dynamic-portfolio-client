@@ -44,55 +44,11 @@
 </nz-table>
 
 <!-- Chat Modal -->
-<nz-modal
-  [(nzVisible)]="isChatModalVisible"
-  nzTitle="Chat with {{ selectedUser?.name }}"
-  [nzContent]="modalContent"
-  (nzOnCancel)="closeChatModal()"
-  (nzOnOk)="sendMessage()"
-  [nzFooter]="null"
-  [nzWidth]="'600px'"
->
-  <ng-template #modalContent>
-    <div class="chat-modal-body">
-      <!-- Display chat messages -->
-      <div class="message-list" style="max-height: 300px; overflow-y: auto">
-        <div *ngFor="let msg of messages" class="message-item">
-          <div
-            [ngClass]="
-              msg.sender === 'admin01' ? 'message-sent' : 'message-received'
-            "
-          >
-            <strong>{{ msg.sender }}:</strong> {{ msg.message }}
-            <span class="timestamp">{{
-              msg.timestamp | date : "shortTime"
-            }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- No messages placeholder -->
-      <div *ngIf="messages.length === 0" class="no-messages">
-        <p>No messages yet...</p>
-      </div>
-
-      <!-- Message input -->
-      <div class="message-input">
-        <input
-          nz-input
-          [(ngModel)]="newMessage"
-          (keydown.enter)="sendMessage()"
-          placeholder="Type your message here"
-        />
-        <button
-          nz-button
-          nzType="primary"
-          (click)="sendMessage()"
-          class="send-btn"
-        >
-          Send
-        </button>
-      </div>
-    </div>
-  </ng-template>
-</nz-modal>
+<app-chat-modal
+  [(isVisible)]="isChatModalVisible"
+  [selectedUser]="selectedUser"
+  [messages]="messages"
+  (send)="sendMessage($event)"
+  (cancel)="closeChatModal()"
+  [width]="'600px'"
+></app-chat-modal>

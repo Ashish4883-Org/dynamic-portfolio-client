@@ -16,6 +16,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { ApiService } from '../../services/api.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { ChatModalComponent } from '../chat-modal/chat-modal.component';
+
 @Component({
   selector: 'app-all-users',
   imports: [
@@ -25,6 +27,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzModalModule,
     NzButtonModule,
     NzInputModule,
+    ChatModalComponent,
   ],
   templateUrl: './all-users.component.html',
   styleUrl: './all-users.component.scss',
@@ -59,6 +62,17 @@ export class AllUsersComponent {
           .filter((user) => user.mstrid !== this.getLoggedInUserId());
       });
     });
+
+    // ✅ Register global message listener ONCE
+    this.socketService.onMessageReceived((message: any) => {
+      if (
+        this.selectedUser &&
+        (message.sender === this.selectedUser.mstrid ||
+          message.receiver === this.selectedUser.mstrid)
+      ) {
+        this.messages.push(message);
+      }
+    });
   }
 
   // Function to open the chat modal and start the chat session
@@ -80,14 +94,14 @@ export class AllUsersComponent {
     //   this.messages.push(message);
     // });
 
-    this.socketService.onMessageReceived((message: any) => {
-      if (
-        message.sender === this.selectedUser.mstrid ||
-        message.receiver === this.selectedUser.mstrid
-      ) {
-        this.messages.push(message);
-      }
-    });
+    // this.socketService.onMessageReceived((message: any) => {
+    //   if (
+    //     message.sender === this.selectedUser.mstrid ||
+    //     message.receiver === this.selectedUser.mstrid
+    //   ) {
+    //     this.messages.push(message);
+    //   }
+    // });
   }
 
   // Send a message to the selected user
@@ -109,19 +123,21 @@ export class AllUsersComponent {
   //   }
   // }
 
-  sendMessage() {
-    if (this.newMessage.trim()) {
+  sendMessage(message?: string) {
+    const text =
+      message?.trim() ?? (this.newMessage ? this.newMessage.trim() : '');
+    if (text) {
       const chatMessage = {
         sender: this.getLoggedInUserId(),
         receiver: this.selectedUser.mstrid,
-        message: this.newMessage.trim(),
+        message: text,
         timestamp: new Date(), // Optional, server can also assign
       };
 
       // ✅ Emit to backend
       this.socketService.sendMessage(chatMessage);
 
-      // ✅ Update UI immediately
+      // Optionally keep this for immediate feedback
       this.messages.push(chatMessage);
       this.newMessage = '';
     }

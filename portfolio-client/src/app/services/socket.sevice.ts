@@ -116,6 +116,14 @@ export class SocketService {
     });
   }
 
+  onMessageSent(callback: (message: any) => void) {
+    if (!this.socket) return;
+
+    this.socket.on('chat:message:sent', (message: any) => {
+      callback(message);
+    });
+  }
+
   sendMessage(message: {
     sender: string;
     receiver: string;
