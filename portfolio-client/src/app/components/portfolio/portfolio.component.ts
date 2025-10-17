@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ProfileComponent } from '../profile/profile.component';
 import { AllUsersComponent } from '../all-users/all-users.component';
+import { CreatePortfolioComponent } from '../create-portfolio/create-portfolio.component';
 
 @Component({
   selector: 'app-portfolio',
@@ -13,6 +14,7 @@ import { AllUsersComponent } from '../all-users/all-users.component';
     DashboardComponent,
     ProfileComponent,
     AllUsersComponent,
+    CreatePortfolioComponent,
   ],
   templateUrl: './portfolio.component.html',
   styleUrl: './portfolio.component.scss',

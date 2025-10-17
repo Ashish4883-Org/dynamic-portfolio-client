@@ -5,6 +5,7 @@
       <li (click)="loadContent('dashboard')">Dashboard</li>
       <li (click)="loadContent('profile')">Profile</li>
       <li (click)="loadContent('users')">All Users</li>
+      <li (click)="loadContent('create-portfolio')">Create-Portfolio</li>
     </ul>
   </nz-splitter-panel>
 
@@ -15,6 +16,9 @@
         <div *ngSwitchCase="'dashboard'"><app-dashboard></app-dashboard></div>
         <div *ngSwitchCase="'profile'"><app-profile></app-profile></div>
         <div *ngSwitchCase="'users'"><app-all-users></app-all-users></div>
+        <div *ngSwitchCase="'create-portfolio'">
+          <app-create-portfolio></app-create-portfolio>
+        </div>
         <!-- <div *ngSwitchDefault>👉 Please select an option from the menu</div> -->
       </ng-container>
     </div>

@@ -13,14 +13,14 @@
       <h2>Welcome, {{ user.name || user.email || "User" }}</h2>
 
       <!-- ✅ Sub-condition: if portfolio is not active -->
-      <button
+      <!-- <button
         *ngIf="user.isPortfolioActive === false"
         nz-button
         nzType="primary"
         (click)="createPortfolioForm()"
       >
         Create a Portfolio
-      </button>
+      </button> -->
     </div>
   </div>
 </ng-container>

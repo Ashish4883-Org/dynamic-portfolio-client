@@ -1,0 +1,178 @@
+<form
+  nz-form
+  [formGroup]="portfolioForm"
+  (ngSubmit)="submitForm()"
+  nzLayout="vertical"
+>
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Full Name</nz-form-label>
+    <nz-form-control nzErrorTip="Enter your full name">
+      <input nz-input formControlName="fullName" placeholder="John Doe" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Email</nz-form-label>
+    <nz-form-control nzErrorTip="Enter a valid email">
+      <input nz-input formControlName="email" placeholder="john@example.com" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Phone</nz-form-label>
+    <nz-form-control nzErrorTip="Enter a valid 10-digit number">
+      <input nz-input formControlName="phone" placeholder="9876543210" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Profession dropdown -->
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Profession</nz-form-label>
+    <nz-form-control>
+      <nz-select formControlName="profession" nzPlaceHolder="Select Profession">
+        <nz-option
+          *ngFor="let prof of professions"
+          [nzValue]="prof"
+          [nzLabel]="prof"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Other profession input (shown only when “Other” selected) -->
+  <nz-form-item *ngIf="showOtherProfession">
+    <nz-form-label [nzRequired]="true"
+      >Please specify your profession</nz-form-label
+    >
+    <nz-form-control nzErrorTip="Enter your profession">
+      <input
+        nz-input
+        formControlName="otherProfession"
+        placeholder="Enter your profession"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">About</nz-form-label>
+    <nz-form-control nzErrorTip="Tell us something about you">
+      <textarea
+        nz-input
+        rows="3"
+        formControlName="about"
+        placeholder="Short bio..."
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Skills</nz-form-label>
+    <nz-form-control nzErrorTip="Select at least one skill">
+      <nz-select
+        formControlName="skills"
+        nzMode="tags"
+        nzPlaceHolder="Enter or select skills"
+      >
+        <nz-option nzValue="Angular" nzLabel="Angular"></nz-option>
+        <nz-option nzValue=".NET Core" nzLabel=".NET Core"></nz-option>
+        <nz-option nzValue="Node.js" nzLabel="Node.js"></nz-option>
+        <nz-option nzValue="SQL" nzLabel="SQL"></nz-option>
+        <nz-option nzValue="AWS" nzLabel="AWS"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Experience (Years)</nz-form-label>
+    <nz-form-control>
+      <input
+        nz-input
+        type="number"
+        formControlName="experience"
+        placeholder="e.g. 3"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Experience Description</nz-form-label>
+    <nz-form-control nzErrorTip="Describe your experience (max 500 chars)">
+      <textarea
+        nz-input
+        rows="3"
+        formControlName="experienceDescription"
+        placeholder="Describe your work experience, projects, or key achievements"
+      >
+      </textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Education -->
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Education</nz-form-label>
+    <nz-form-control nzErrorTip="Enter your educational background">
+      <textarea
+        nz-input
+        rows="2"
+        formControlName="education"
+        placeholder="e.g., B.Tech in Computer Science, XYZ University (2019)"
+      >
+      </textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Achievements -->
+  <nz-form-item>
+    <nz-form-label>Achievements</nz-form-label>
+    <nz-form-control nzErrorTip="Maximum 500 characters allowed">
+      <textarea
+        nz-input
+        rows="2"
+        formControlName="achievements"
+        placeholder="List key awards, certifications, or milestones"
+      >
+      </textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Project Link</nz-form-label>
+    <nz-form-control nzErrorTip="Enter a valid URL">
+      <input
+        nz-input
+        formControlName="projectLink"
+        placeholder="https://myproject.com"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>GitHub Profile</nz-form-label>
+    <nz-form-control nzErrorTip="Enter a valid GitHub link">
+      <input
+        nz-input
+        formControlName="github"
+        placeholder="https://github.com/username"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Portfolio Created Date</nz-form-label>
+    <nz-form-control>
+      <nz-date-picker
+        [nzFormat]="'yyyy-MM-dd'"
+        formControlName="portfolioDate"
+      ></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="form-actions">
+    <button nz-button nzType="primary" [nzLoading]="isSubmitting">
+      Submit
+    </button>
+    <button nz-button nzType="default" type="button" (click)="resetForm()">
+      Reset
+    </button>
+  </div>
+</form>
