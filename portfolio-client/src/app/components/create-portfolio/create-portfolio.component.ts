@@ -9,6 +9,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
+import { Store } from '@ngrx/store';
+import { selectCurrentUser } from '../../store/user/user.selectors';
 
 @Component({
   selector: 'app-create-portfolio',
@@ -30,6 +32,9 @@ export class CreatePortfolioComponent {
   portfolioForm!: FormGroup;
   isSubmitting = false;
   api = inject(ApiService);
+  store = inject(Store);
+
+  mstrid = '';
 
   professions = [
     'Frontend Developer',
@@ -40,10 +45,19 @@ export class CreatePortfolioComponent {
     'Other',
   ];
 
-  constructor(private fb: FormBuilder, private message: NzMessageService) {}
+  constructor(private fb: FormBuilder, private message: NzMessageService) {
+    this.store.select(selectCurrentUser).subscribe((user) => {
+      console.log('CreatePortfolioComponent - Current User:', user);
+      if (user && user.mstrid) {
+        console.log('Current User MstrId:', user.mstrid);
+        this.mstrid = user.mstrid;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.portfolioForm = this.fb.group({
+      mstrid: [''],
       fullName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
@@ -93,6 +107,7 @@ export class CreatePortfolioComponent {
     //   this.message.success('Portfolio submitted successfully!');
     //   this.portfolioForm.reset();
     // }, 1000);
+    formValue.mstrid = this.mstrid;
     formValue.portfolioDate = formValue.portfolioDate
       ? this.portfolioForm.value.portfolioDate.toISOString().split('T')[0]
       : null;
