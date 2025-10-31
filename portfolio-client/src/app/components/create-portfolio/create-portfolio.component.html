@@ -168,11 +168,41 @@
   </nz-form-item>
 
   <div class="form-actions">
-    <button nz-button nzType="primary" [nzLoading]="isSubmitting">
-      Submit
-    </button>
-    <button nz-button nzType="default" type="button" (click)="resetForm()">
-      Reset
-    </button>
+    <!-- Existing portfolio, not editing -->
+    <ng-container *ngIf="portfolioExists && !isEditing; else editMode">
+      <button nz-button nzType="default" type="button" (click)="enableEdit()">
+        Edit Portfolio
+      </button>
+      <button
+        nz-button
+        nzType="primary"
+        type="button"
+        (click)="openPortfolioView()"
+      >
+        View Portfolio
+      </button>
+    </ng-container>
+
+    <!-- Editing existing portfolio -->
+    <ng-template #editMode>
+      <ng-container *ngIf="isEditing">
+        <button nz-button nzType="primary" [nzLoading]="isSubmitting">
+          Save Changes
+        </button>
+        <button nz-button nzType="default" type="button" (click)="cancelEdit()">
+          Back
+        </button>
+      </ng-container>
+    </ng-template>
+
+    <!-- Creating new portfolio -->
+    <ng-container *ngIf="!portfolioExists && !isEditing">
+      <button nz-button nzType="primary" [nzLoading]="isSubmitting">
+        Submit
+      </button>
+      <button nz-button nzType="default" type="button" (click)="resetForm()">
+        Reset
+      </button>
+    </ng-container>
   </div>
 </form>

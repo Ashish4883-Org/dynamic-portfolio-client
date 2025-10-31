@@ -75,8 +75,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     }
     // Generate mstrid: name + random number (1-100)
-    const randomNum = Math.floor(Math.random() * 100) + 1;
-    const mstrid = `${this.validateForm.value.fullName}${randomNum}`;
+    const fullName = this.validateForm.value.fullName || '';
+    const randomNum = Math.floor(1000 + Math.random() * 9000); // example 4-digit random number
+
+    // Remove spaces, take first 5 chars, and append random number
+    const mstrid = `${fullName
+      .replace(/\s+/g, '')
+      .substring(0, 5)}${randomNum}`;
 
     // Create RegisterUser object
     const user: RegisterUser = {

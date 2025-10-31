@@ -21,6 +21,10 @@ export const notificationInterceptor: HttpInterceptorFn = (req, next) => {
         }
       },
       error: (error: HttpErrorResponse) => {
+        if (req.url.endsWith('/me')) {
+          // Don't show notification for backend wake-up errors
+          return;
+        }
         const msg = error.error?.message || 'Something went wrong!';
         notification.error('Error', msg);
       },
