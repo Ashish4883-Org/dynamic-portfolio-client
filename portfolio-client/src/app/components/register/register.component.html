@@ -30,7 +30,7 @@
     </nz-form-item>
 
     <!-- Password -->
-    <nz-form-item>
+    <!-- <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="password">
         Password
       </nz-form-label>
@@ -46,10 +46,41 @@
           id="password"
         />
       </nz-form-control>
+    </nz-form-item> -->
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzRequired>Password</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input
+          nz-input
+          type="password"
+          formControlName="password"
+          placeholder="Enter password"
+        />
+        <ng-container
+          *ngIf="
+            validateForm.get('password')?.dirty ||
+            validateForm.get('password')?.touched
+          "
+        >
+          <div
+            *ngIf="validateForm.get('password')?.hasError('required')"
+            class="text-red-500"
+          >
+            Password is required
+          </div>
+          <div
+            *ngIf="validateForm.get('password')?.hasError('minlength')"
+            class="text-red-500"
+          >
+            Password must be at least 6 characters long
+          </div>
+        </ng-container>
+      </nz-form-control>
     </nz-form-item>
 
     <!-- Confirm Password -->
-    <nz-form-item>
+    <!-- <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="checkPassword">
         Confirm Password
       </nz-form-label>
@@ -70,6 +101,37 @@
         } @else if (validateForm.controls.checkPassword.hasError('required')) {
         <div class="ant-form-item-explain">Please confirm your password!</div>
         } }
+      </nz-form-control>
+    </nz-form-item> -->
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzRequired>Confirm Password</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input
+          nz-input
+          type="password"
+          formControlName="checkPassword"
+          placeholder="Confirm password"
+        />
+        <ng-container
+          *ngIf="
+            validateForm.get('checkPassword')?.dirty ||
+            validateForm.get('checkPassword')?.touched
+          "
+        >
+          <div
+            *ngIf="validateForm.get('checkPassword')?.hasError('required')"
+            class="text-red-500"
+          >
+            Confirm Password is required
+          </div>
+          <div
+            *ngIf="validateForm.hasError('passwordMismatch')"
+            class="text-red-500"
+          >
+            Passwords do not match
+          </div>
+        </ng-container>
       </nz-form-control>
     </nz-form-item>
 

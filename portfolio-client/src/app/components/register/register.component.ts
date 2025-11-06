@@ -42,7 +42,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     {
       fullName: this.fb.control('', [Validators.max(25)]),
       email: this.fb.control('', [Validators.email, Validators.required]),
-      password: this.fb.control('', [Validators.required]),
+      password: this.fb.control('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
       checkPassword: this.fb.control('', [Validators.required]),
       phoneNumberPrefix: this.fb.control<'+91'>('+91'),
       phoneNumber: this.fb.control('', [Validators.required]),
