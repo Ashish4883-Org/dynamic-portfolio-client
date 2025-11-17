@@ -59,7 +59,8 @@ export class AllUsersComponent {
             role: user.role,
             online: onlineMstrIds.includes(user.mstrid),
           }))
-          .filter((user) => user.mstrid !== this.getLoggedInUserId());
+          .filter((user) => user.mstrid !== this.getLoggedInUserId())
+          .sort((a, b) => Number(b.online) - Number(a.online)); // Online users first
       });
     });
 

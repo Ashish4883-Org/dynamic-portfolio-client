@@ -1,10 +1,12 @@
-<h3>👥 All Users</h3>
+<h3>👥 All Users : {{ users.length }}</h3>
 <nz-table
   #userTable
   [nzBordered]="true"
-  [nzSize]="'middle'"
+  [nzPageSize]="5"
+  [nzPageSizeOptions]="[5, 10, 15, 20]"
+  [nzShowSizeChanger]="true"
   [nzBordered]="true"
-  [nzShowPagination]="false"
+  [nzShowPagination]="true"
   [nzBordered]="true"
   [nzBordered]="true"
   [nzData]="users"
