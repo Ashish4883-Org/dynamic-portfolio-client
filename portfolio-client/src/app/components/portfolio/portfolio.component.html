@@ -2,10 +2,22 @@
   <!-- Sidebar Menu -->
   <nz-splitter-panel nzDefaultSize="20%" nzMin="15%" nzMax="30%">
     <ul class="menu">
-      <li (click)="loadContent('dashboard')">Dashboard</li>
-      <li (click)="loadContent('profile')">Profile</li>
-      <li (click)="loadContent('users')">All Users</li>
-      <li (click)="loadContent('create-portfolio')">Portfolio</li>
+      <li (click)="loadContent('dashboard')" [class.active]="selected === 'dashboard'">
+        <span nz-icon nzType="dashboard"></span>
+        Dashboard
+      </li>
+      <li (click)="loadContent('profile')" [class.active]="selected === 'profile'">
+        <span nz-icon nzType="user"></span>
+        Profile
+      </li>
+      <li (click)="loadContent('users')" [class.active]="selected === 'users'">
+        <span nz-icon nzType="team"></span>
+        All Users
+      </li>
+      <li (click)="loadContent('create-portfolio')" [class.active]="selected === 'create-portfolio'">
+        <span nz-icon nzType="plus-square"></span>
+        Portfolio
+      </li>
     </ul>
   </nz-splitter-panel>
 

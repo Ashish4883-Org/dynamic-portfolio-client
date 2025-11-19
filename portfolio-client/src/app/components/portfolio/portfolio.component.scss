@@ -35,6 +35,14 @@ nz-splitter {
   background-color: #e6f7ff;
 }
 
+/* Selected/Active item */
+.menu li.active {
+  background-color: #bae7ff;       /* slightly darker */
+  border-left: 4px solid #1890ff;  /* NG-ZORRO blue */
+  font-weight: 600;
+  color: #1890ff;
+}
+
 .content {
   padding: 16px;
   font-size: 18px;
