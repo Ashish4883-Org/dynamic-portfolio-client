@@ -17,6 +17,7 @@ import { ApiService } from '../../services/api.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { ChatModalComponent } from '../chat-modal/chat-modal.component';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-all-users',
@@ -28,6 +29,7 @@ import { ChatModalComponent } from '../chat-modal/chat-modal.component';
     NzButtonModule,
     NzInputModule,
     ChatModalComponent,
+    NzIconModule
   ],
   templateUrl: './all-users.component.html',
   styleUrl: './all-users.component.scss',

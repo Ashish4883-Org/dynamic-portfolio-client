@@ -15,7 +15,7 @@
       <th>Name</th>
       <th>Role</th>
       <th>Status</th>
-      <th>Action</th>
+      <th>Chat</th>
     </tr>
   </thead>
 
@@ -33,9 +33,12 @@
       </td>
       <td>
         <!-- Chat Button -->
-        <button nz-button nzType="primary" (click)="startChat(user)">
-          Chat
-        </button>
+        <div class="chat-btn-wrapper">
+          <button nz-button nzType="primary" (click)="startChat(user)">
+            <nz-icon nzType="wechat" nzTheme="outline" />
+          </button>
+          <span class="pulse-dot"></span>
+        </div>
       </td>
     </tr>
   </tbody>
