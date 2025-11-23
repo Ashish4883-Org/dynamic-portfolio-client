@@ -29,7 +29,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzButtonModule,
     NzInputModule,
     ChatModalComponent,
-    NzIconModule
+    NzIconModule,
   ],
   templateUrl: './all-users.component.html',
   styleUrl: './all-users.component.scss',
@@ -42,6 +42,7 @@ export class AllUsersComponent {
   isChatModalVisible = false;
   messages: any[] = [];
   newMessage: string = '';
+  unreadMessages: { [mstrid: string]: boolean } = {};
 
   private socketService = inject(SocketService);
   private apiService = inject(ApiService);
@@ -60,6 +61,7 @@ export class AllUsersComponent {
             name: user.name,
             role: user.role,
             online: onlineMstrIds.includes(user.mstrid),
+            hasNewMessage: this.unreadMessages[user.mstrid] ?? false,
           }))
           .filter((user) => user.mstrid !== this.getLoggedInUserId())
           .sort((a, b) => Number(b.online) - Number(a.online)); // Online users first
@@ -68,6 +70,18 @@ export class AllUsersComponent {
 
     // ✅ Register global message listener ONCE
     this.socketService.onMessageReceived((message: any) => {
+      const sender = message.sender;
+      const receiver = message.receiver;
+      const loggedInId = this.getLoggedInUserId();
+
+      // 🔐 Only messages sent *to you*
+      if (receiver === loggedInId) {
+        // 💬 If this sender chat is NOT open
+        if (!this.selectedUser || this.selectedUser.mstrid !== sender) {
+          this.unreadMessages[sender] = true;
+        }
+      }
+
       if (
         this.selectedUser &&
         (message.sender === this.selectedUser.mstrid ||
@@ -75,7 +89,17 @@ export class AllUsersComponent {
       ) {
         this.messages.push(message);
       }
+
+      // 🔄 Update user list to refresh UI
+      this.updateUsersWithUnread();
     });
+  }
+
+  updateUsersWithUnread() {
+    this.users = this.users.map((user) => ({
+      ...user,
+      hasNewMessage: !!this.unreadMessages[user.mstrid],
+    }));
   }
 
   // Function to open the chat modal and start the chat session
@@ -88,6 +112,10 @@ export class AllUsersComponent {
 
     // Show the chat modal
     this.isChatModalVisible = true;
+
+    // 🔥 Clear unread for this user when chat is opened
+    this.unreadMessages[user.mstrid] = false;
+    this.updateUsersWithUnread();
 
     // Connect the socket for this chat
     this.socketService.connect(this.getLoggedInUserId());

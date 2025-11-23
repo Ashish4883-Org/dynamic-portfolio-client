@@ -37,7 +37,8 @@
           <button nz-button nzType="primary" (click)="startChat(user)">
             <nz-icon nzType="wechat" nzTheme="outline" />
           </button>
-          <span class="pulse-dot"></span>
+          <!-- 🔥 Show dot only if NEW MESSAGE is pending -->
+          <span class="pulse-dot" *ngIf="user.hasNewMessage"> </span>
         </div>
       </td>
     </tr>

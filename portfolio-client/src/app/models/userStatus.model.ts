@@ -3,4 +3,5 @@ export interface AllUserStatus {
   name: string;
   role: string;
   online: boolean;
+  hasNewMessage?: boolean;
 }
