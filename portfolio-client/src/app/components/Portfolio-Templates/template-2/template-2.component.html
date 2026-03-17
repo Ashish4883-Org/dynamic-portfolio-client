@@ -1,0 +1,93 @@
+<nz-card *ngIf="portfolio;" nzBordered nzTitle="Portfolio" class="glass-card">
+
+<div class="header fade-in">
+<div class="user-info">
+<nz-avatar class="avatar-circle" [nzText]="getInitials(portfolio.fullName)"></nz-avatar>
+<div>
+<h3 class="title-text">{{ portfolio.fullName }}</h3>
+<p class="subtitle-text">{{ portfolio.profession || portfolio.otherProfession }}</p>
+</div>
+</div>
+
+```
+<nz-descriptions class="glass-box" nzBordered [nzColumn]="1" nzSize="small">
+  <nz-descriptions-item nzTitle="Email">
+    <a href="mailto:{{ portfolio.email }}">{{ portfolio.email }}</a>
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Phone">
+    {{ portfolio.phone }}
+  </nz-descriptions-item>
+</nz-descriptions>
+```
+
+</div>
+
+<div class="portfolio-body fade-up">
+
+```
+<nz-row>
+  <nz-descriptions class="glass-box" nzBordered [nzColumn]="1" nzSize="small">
+    <nz-descriptions-item nzTitle="Experience">
+      {{ portfolio.experience }} year{{ portfolio.experience > 1 ? "s" : "" }}
+    </nz-descriptions-item>
+
+    <nz-descriptions-item nzTitle="Profession">
+      {{ portfolio.profession !== "Other" ? portfolio.profession : portfolio.otherProfession }}
+    </nz-descriptions-item>
+
+    <nz-descriptions-item nzTitle="Skills">
+      <ng-container *ngIf="portfolio.skills?.length; else noSkills">
+        <nz-tag *ngFor="let s of portfolio.skills" class="skill-tag">{{ s }}</nz-tag>
+      </ng-container>
+      <ng-template #noSkills>
+        <span class="muted">No skills added</span>
+      </ng-template>
+    </nz-descriptions-item>
+
+    <nz-descriptions-item nzTitle="GitHub / Project">
+      <div *ngIf="portfolio.github">
+        <a href="{{ portfolio.github }}" target="_blank">{{ portfolio.github }}</a>
+      </div>
+      <div *ngIf="portfolio.projectLink">
+        <a href="{{ portfolio.projectLink }}" target="_blank">{{ portfolio.projectLink }}</a>
+      </div>
+      <div *ngIf="!portfolio.github && !portfolio.projectLink" class="muted">Not provided</div>
+    </nz-descriptions-item>
+  </nz-descriptions>
+</nz-row>
+
+<nz-row style="margin-top: 15px">
+  <nz-col nzXs="24">
+    <nz-card nzSize="small" nzTitle="About" class="glass-section fade-up">
+      <p>{{ portfolio.about || "—" }}</p>
+    </nz-card>
+  </nz-col>
+</nz-row>
+
+<nz-row style="margin-top: 15px">
+  <nz-col nzXs="24">
+    <nz-card nzSize="small" nzTitle="Experience Details" class="glass-section fade-up">
+      <p>{{ portfolio.experienceDescription || "—" }}</p>
+    </nz-card>
+  </nz-col>
+</nz-row>
+
+<nz-row style="margin-top: 15px">
+  <nz-col nzXs="24">
+    <nz-card nzSize="small" nzTitle="Achievements" class="glass-section fade-up">
+      <p>{{ portfolio.achievements || "—" }}</p>
+    </nz-card>
+  </nz-col>
+</nz-row>
+
+<nz-row style="margin-top: 15px">
+  <nz-col nzXs="24">
+    <nz-card nzSize="small" nzTitle="Education" class="glass-section fade-up">
+      <p>{{ portfolio.education || "—" }}</p>
+    </nz-card>
+  </nz-col>
+</nz-row>
+```
+
+</div>
+</nz-card>

@@ -1,0 +1,90 @@
+/* Background */
+:host {
+  display: block;
+  padding: 20px;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  min-height: 100vh;
+  color: white;
+}
+
+/* Glass Effect Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  padding: 20px;
+}
+
+/* Text */
+.title-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.subtitle-text {
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+/* Glass sections */
+.glass-box,
+.glass-section {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.glass-section:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Avatar */
+.avatar-circle {
+  background: #ff7eb3 !important;
+  box-shadow: 0 0 10px rgba(255, 126, 179, 0.6);
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.fade-up {
+  animation: fadeUp 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tags */
+.skill-tag {
+  margin-top: 6px;
+  background: #4a90e2;
+  color: white !important;
+}
+
+/* Center Empty / Loading */
+.loading-container,
+.empty-state {
+  display: flex;
+  height: 60vh;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+/* Descriptions override text color */
+::ng-deep .ant-descriptions-item-label,
+::ng-deep .ant-descriptions-item-content {
+  color: #fff !important;
+}

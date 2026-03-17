@@ -1,0 +1,139 @@
+/* GLOBAL */
+.portfolio-wrapper {
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  background: #0b0f1a;
+  min-height: 100vh;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 80px 20px;
+  overflow: hidden;
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top, #4f46e5, transparent 70%);
+    filter: blur(100px);
+    opacity: 0.6;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .avatar {
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .name {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 10px 0;
+  }
+
+  .profession {
+    font-size: 18px;
+    color: #a1a1aa;
+  }
+
+  .cta-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
+/* SECTION */
+.section {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: auto;
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    color: #d4d4d8;
+    line-height: 1.6;
+  }
+}
+
+/* GLASS EFFECT */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  margin: 20px auto;
+}
+
+/* SKILLS */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-tag {
+  background: linear-gradient(135deg, #6366f1, #9333ea);
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: transform 0.2s ease;
+}
+
+.skill-tag:hover {
+  transform: scale(1.1);
+}
+
+/* EXPERIENCE */
+.exp-card {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* CONTACT */
+.contact p {
+  margin: 4px 0;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 30px;
+  color: #71717a;
+}
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  padding: 100px;
+  color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero .name {
+    font-size: 28px;
+  }
+
+  .section {
+    padding: 20px;
+  }
+
+  .glass {
+    padding: 20px;
+  }
+}

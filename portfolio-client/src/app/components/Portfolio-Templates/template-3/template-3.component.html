@@ -1,0 +1,102 @@
+<nz-spin [nzSpinning]="loading" nzSize="large">
+<div *ngIf="portfolio" class="portfolio-wrapper">
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-content">
+    <nz-avatar
+      [nzSize]="100"
+      nzShape="circle"
+      class="avatar"
+    >
+      {{ getInitials(portfolio.fullName || portfolio.email) }}
+    </nz-avatar>
+
+    <h1 class="name">{{ portfolio.fullName }}</h1>
+    <p class="profession">{{ portfolio.profession }}</p>
+
+    <div class="cta-buttons">
+      <a
+        *ngIf="portfolio.github"
+        [href]="portfolio.github"
+        target="_blank"
+        nz-button
+        nzType="primary"
+      >
+        GitHub
+      </a>
+
+      <a
+        *ngIf="portfolio.projectLink"
+        [href]="portfolio.projectLink"
+        target="_blank"
+        nz-button
+      >
+        Live Project
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section glass">
+  <h2>About Me</h2>
+  <p>{{ portfolio.about }}</p>
+</section>
+
+<!-- SKILLS -->
+<section class="section">
+  <h2>Skills</h2>
+  <div class="skills">
+    <nz-tag
+      *ngFor="let skill of portfolio.skills"
+      class="skill-tag"
+    >
+      {{ skill }}
+    </nz-tag>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section glass">
+  <h2>Experience</h2>
+  <div class="exp-card">
+    <h3>{{ portfolio.experience }} Years Experience</h3>
+    <p>{{ portfolio.experienceDescription }}</p>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section">
+  <h2>Education</h2>
+  <p>{{ portfolio.education }}</p>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="section glass" *ngIf="portfolio.achievements">
+  <h2>Achievements</h2>
+  <p>{{ portfolio.achievements }}</p>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact">
+  <h2>Contact</h2>
+  <p>{{ portfolio.email }}</p>
+  <p>{{ portfolio.phone }}</p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© {{ portfolio.fullName }} • Portfolio</p>
+</footer>
+
+
+</div>
+
+<!-- EMPTY STATE -->
+<div *ngIf="!portfolio && !loading" class="empty">
+<h2>Portfolio not found</h2>
+</div>
+</nz-spin>

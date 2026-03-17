@@ -1,73 +1,43 @@
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ApiService } from '../../services/api.service';
-
-// Ng Zorro imports
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { Component, HostListener } from "@angular/core";  // HostListener is already imported
+import { Template1Component } from "../Portfolio-Templates/template-1/template-1.component";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { Template2Component } from "../Portfolio-Templates/template-2/template-2.component";
+import { NzOptionComponent, NzSelectModule } from "ng-zorro-antd/select";
+import { Template3Component } from "../Portfolio-Templates/template-3/template-3.component";
+import { Template4Component } from "../Portfolio-Templates/template-4/template-4.component";
 
 @Component({
   selector: 'app-view-portfolio',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
-    NzCardModule,
-    NzAvatarModule,
-    NzDividerModule,
-    NzDescriptionsModule,
-    NzGridModule,
-    NzTypographyModule,
-    NzTagModule,
-    NzSpinModule,
-    NzButtonModule,
-    NzToolTipModule,
+    FormsModule,
+    NzSelectModule,
+    Template1Component,
+    Template2Component,
+    NzOptionComponent,
+    Template3Component,
+    Template4Component
   ],
   templateUrl: './view-portfolio.component.html',
   styleUrls: ['./view-portfolio.component.scss'],
 })
 export class ViewPortfolioComponent {
-  mstrid!: string;
-  loading = true;
-  portfolio: any = null;
-  api = inject(ApiService);
+  selectedTemplate: string = 'template-3'; // default template
+  showSelector: boolean = true;  // Controls visibility of the selector
 
-  constructor(private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    this.mstrid = this.route.snapshot.paramMap.get('userId')!;
-    this.api.get(`portfolios/mstrid/${this.mstrid}`).subscribe({
-      next: (res: any) => {
-        this.portfolio = res;
-        this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-        this.portfolio = null;
-      },
-    });
+  onTemplateChange(): void {
+    console.log('Template changed to:', this.selectedTemplate);
   }
 
-  openPortfolio() {
-    window.open(`/portfolio/${this.mstrid}`, '_blank');
-  }
-
-  getInitials(nameOrEmail: string): string {
-    if (!nameOrEmail) return 'U';
-    const parts = nameOrEmail.trim().split(' ');
-    if (parts.length === 1) {
-      return parts[0].charAt(0).toUpperCase();
-    } else {
-      return (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase();
+  // Updated to prevent toggle when clicking inside the selector
+  @HostListener('click', ['$event'])
+  toggleSelector(event: Event): void {
+    // If the click is inside the selector div, don't toggle
+    if (event.target && (event.target as HTMLElement).closest('.template-selector')) {
+      return;
     }
+    this.showSelector = !this.showSelector;
   }
 }
