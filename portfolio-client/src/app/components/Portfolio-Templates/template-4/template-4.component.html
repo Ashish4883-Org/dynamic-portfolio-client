@@ -8,12 +8,12 @@
  <span class="nav-brand">Umang<span class="dot">.</span></span>
 
  <div class="nav-links" [class.open]="menuOpen">
- <a href="#about" [class.active]="activeSection === 'about'" (click)="closeMenu()">About</a>
- <a href="#skills" [class.active]="activeSection === 'skills'" (click)="closeMenu()">Skills</a>
- <a href="#experience" [class.active]="activeSection === 'experience'" (click)="closeMenu()">Experience</a>
- <a href="#education" [class.active]="activeSection === 'education'" (click)="closeMenu()">Education</a>
- <a href="#achievements" [class.active]="activeSection === 'achievements'" (click)="closeMenu()">Achievements</a>
- <a href="#contact" [class.active]="activeSection === 'contact'" (click)="closeMenu()">Contact</a>
+ <a href="#about" [class.active]="activeSection === 'about'" (click)="scrollToSection('about', $event)">About</a>
+ <a href="#skills" [class.active]="activeSection === 'skills'" (click)="scrollToSection('skills', $event)">Skills</a>
+ <a href="#experience" [class.active]="activeSection === 'experience'" (click)="scrollToSection('experience', $event)">Experience</a>
+ <a href="#education" [class.active]="activeSection === 'education'" (click)="scrollToSection('education', $event)">Education</a>
+ <a href="#achievements" [class.active]="activeSection === 'achievements'" (click)="scrollToSection('achievements', $event)">Achievements</a>
+ <a href="#contact" [class.active]="activeSection === 'contact'" (click)="scrollToSection('contact', $event)">Contact</a>
  </div>
 
  <div class="nav-actions">

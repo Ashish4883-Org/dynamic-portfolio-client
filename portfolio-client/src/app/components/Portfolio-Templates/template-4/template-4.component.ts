@@ -207,6 +207,15 @@ export class Template4Component implements OnInit, AfterViewInit, OnDestroy {
  window.scrollTo({ top: 0, behavior: this.prefersReducedMotion ? 'auto' : 'smooth' });
  }
 
+ scrollToSection(sectionId: string, event: Event): void {
+ event.preventDefault();
+ this.closeMenu();
+ document.getElementById(sectionId)?.scrollIntoView({
+ behavior: this.prefersReducedMotion ? 'auto' : 'smooth',
+ block: 'start',
+ });
+ }
+
 // Close the mobile menu when a click lands outside it or the toggle button.
  @HostListener('document:click', ['$event'])
  onDocumentClick(event: MouseEvent): void {

@@ -1,4 +1,4 @@
-<div *ngIf="showSelector" class="template-selector">  <!-- Add *ngIf here -->
+<div *ngIf="showSelector" class="template-selector">
   <label for="template-dropdown">Select Template: </label>
   <nz-select
     id="template-dropdown"
@@ -12,7 +12,12 @@
   </nz-select>
 </div>
 
-<app-template-1 *ngIf="selectedTemplate === 'template-1'"></app-template-1>
-<app-template-2 *ngIf="selectedTemplate === 'template-2'"></app-template-2>
-<app-template-3 *ngIf="selectedTemplate === 'template-3'"></app-template-3>
-<app-template-4 *ngIf="selectedTemplate === 'template-4'"></app-template-4>
+<ng-container *ngIf="isTemplate4User; else selectableTemplates">
+  <app-template-4></app-template-4>
+</ng-container>
+
+<ng-template #selectableTemplates>
+  <app-template-1 *ngIf="selectedTemplate === 'template-1'"></app-template-1>
+  <app-template-2 *ngIf="selectedTemplate === 'template-2'"></app-template-2>
+  <app-template-3 *ngIf="selectedTemplate === 'template-3'"></app-template-3>
+</ng-template>

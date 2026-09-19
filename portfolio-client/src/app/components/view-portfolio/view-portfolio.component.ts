@@ -28,7 +28,7 @@ export class ViewPortfolioComponent implements OnInit {
   private readonly template4UserId = 'testu6526';
   selectedTemplate: string = 'template-3';
   isTemplate4User = false;
-  showSelector: boolean = true;  // Controls visibility of the selector
+  showSelector = true;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -36,18 +36,22 @@ export class ViewPortfolioComponent implements OnInit {
     const userId = this.route.snapshot.paramMap.get('userId');
     this.isTemplate4User = userId === this.template4UserId;
     this.selectedTemplate = this.isTemplate4User ? 'template-4' : 'template-3';
+    this.showSelector = !this.isTemplate4User;
   }
 
   onTemplateChange(): void {
-    if (!this.isTemplate4User && this.selectedTemplate === 'template-4') {
+    if (this.isTemplate4User) {
+      this.selectedTemplate = 'template-4';
+    } else if (this.selectedTemplate === 'template-4') {
       this.selectedTemplate = 'template-3';
     }
-    console.log('Template changed to:', this.selectedTemplate);
   }
 
   // Updated to prevent toggle when clicking inside the selector
   @HostListener('click', ['$event'])
   toggleSelector(event: Event): void {
+    if (this.isTemplate4User) return;
+
     // If the click is inside the selector div, don't toggle
     if (event.target && (event.target as HTMLElement).closest('.template-selector')) {
       return;
