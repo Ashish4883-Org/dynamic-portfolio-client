@@ -33,7 +33,7 @@ const THEME_KEY = 'umang-resume-theme';
  standalone: true,
  imports: [CommonModule, RevealOnScrollDirective, CountUpDirective, TiltDirective, MagneticDirective],
  templateUrl: './template-4.component.html',
- styleUrl: './template-4.component.scss',
+ styleUrls: ['./template-4.component.scss', './template-4-sections.component.scss'],
 })
 export class Template4Component implements OnInit, AfterViewInit, OnDestroy {
  private hostEl = inject(ElementRef<HTMLElement>);

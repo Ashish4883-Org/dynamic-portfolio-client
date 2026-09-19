@@ -1,4 +1,5 @@
-import { Component, HostListener } from "@angular/core";  // HostListener is already imported
+import { Component, HostListener, OnInit } from "@angular/core";
+import { ActivatedRoute } from '@angular/router';
 import { Template1Component } from "../Portfolio-Templates/template-1/template-1.component";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
@@ -23,11 +24,24 @@ import { Template4Component } from "../Portfolio-Templates/template-4/template-4
   templateUrl: './view-portfolio.component.html',
   styleUrls: ['./view-portfolio.component.scss'],
 })
-export class ViewPortfolioComponent {
-  selectedTemplate: string = 'template-3'; // default template
+export class ViewPortfolioComponent implements OnInit {
+  private readonly template4UserId = 'testu6526';
+  selectedTemplate: string = 'template-3';
+  isTemplate4User = false;
   showSelector: boolean = true;  // Controls visibility of the selector
 
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    const userId = this.route.snapshot.paramMap.get('userId');
+    this.isTemplate4User = userId === this.template4UserId;
+    this.selectedTemplate = this.isTemplate4User ? 'template-4' : 'template-3';
+  }
+
   onTemplateChange(): void {
+    if (!this.isTemplate4User && this.selectedTemplate === 'template-4') {
+      this.selectedTemplate = 'template-3';
+    }
     console.log('Template changed to:', this.selectedTemplate);
   }
 
