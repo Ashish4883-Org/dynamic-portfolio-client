@@ -71,9 +71,9 @@ export class AppComponent implements OnInit {
           this.isLoading = false;
           console.log('Backend is awake:', res);
 
-          this.http
-            .get(`${environment.base}redisCheck`, { responseType: 'text' })
-            .subscribe((res) => console.log(res));
+          // this.http
+          //   .get(`${environment.base}redisCheck`, { responseType: 'text' })
+          //   .subscribe((res) => console.log(res));
 
           const currentUrl = this.router.url;
           if (!currentUrl.startsWith('/user/portfolio/')) {
